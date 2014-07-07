@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# Adding a second hard drive to system.
-# Software configuration. Assumes hardware already mounted.
-# From an article by the author of the ABS Guide.
+# Добавление второго жесткого диска в систему.
+# Настройка программного обеспечения. Предполашается что жесткий диск уже подключен физически.
+# Из статьи автора руководства ABS Guide.
 # In issue #38 of _Linux Gazette_, http://www.linuxgazette.com.
 
-ROOT_UID=0     # This script must be run as root.
-E_NOTROOT=67   # Non-root exit error.
+ROOT_UID=0     # Данный скрипт требует привелегии пользоваьеля root.
+E_NOTROOT=67   # Остановка выполнения скрипта если последний запушен от обычного пользователя.
 
 if [ "$UID" -ne "$ROOT_UID" ]
 then
@@ -14,28 +14,28 @@ then
   exit $E_NOTROOT
 fi  
 
-# Use with extreme caution!
-# If something goes wrong, you may wipe out your current filesystem.
+# Использовать с особой осторожносью!
+# Если что то пойдет не так, Вы можете потерять текушую файловую систему.
 
 
-NEWDISK=/dev/hdb         # Assumes /dev/hdb vacant. Check!
-MOUNTPOINT=/mnt/newdisk  # Or choose another mount point.
+NEWDISK=/dev/hdb         # Предполагается что устройства /dev/hdb нет в системе. Проверить перед выполнением!
+MOUNTPOINT=/mnt/newdisk  # Можно выбрать другую точку монтирования.
 
 
 fdisk $NEWDISK
-mke2fs -cv $NEWDISK1   # Check for bad blocks (verbose output).
-#  Note:           ^     /dev/hdb1, *not* /dev/hdb!
+mke2fs -cv $NEWDISK1   # Проверка на дефектные блоки (подробный вывод).
+#  Примечание:        ^     /dev/hdb1, *не то же самое что* /dev/hdb!
 mkdir $MOUNTPOINT
-chmod 777 $MOUNTPOINT  # Makes new drive accessible to all users.
+chmod 777 $MOUNTPOINT  # Делаем новый диск доступным для всех пользователей.
 
 
-# Now, test ...
+# Теперь тест ...  :)
 # mount -t ext2 /dev/hdb1 /mnt/newdisk
-# Try creating a directory.
-# If it works, umount it, and proceed.
+# Попробуйте создать папку.
+# Если это удалось, то  отмонтируйте раздел  /dev/hdb1  и перейдем к последнему этапу.
 
-# Final step:
-# Add the following line to /etc/fstab.
+# Заключительный шаг:
+# Добавьте следующую строку в /etc/fstab.
 # /dev/hdb1  /mnt/newdisk  ext2  defaults  1 1
 
 exit
