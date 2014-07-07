@@ -1,7 +1,7 @@
 #!/bin/bash
-# Author: Sigurd Solaas, 20 Apr 2011
-# Used in ABS Guide with permission.
-# Requires version 4.2+ of Bash.
+# Автор: Sigurd Solaas, 20 апреля 2011
+# Используется в ABS Guide с разрешения автора.
+# Требуемая версия Bash 4.2+.
 
 key="no value yet"
 while true; do
@@ -18,13 +18,13 @@ while true; do
   echo "================================"
   echo
 
- # Convert the separate home-key to home-key_num_7:
+ # Преобразование отдельной кнопки home-key в home-key_num_7:
  if [ "$key" = $'\x1b\x4f\x48' ]; then
   key=$'\x1b\x5b\x31\x7e'
   #   Quoted string-expansion construct. 
  fi
 
- # Convert the separate end-key to end-key_num_1.
+ # Преобразование отдельной кнопки end-key в end-key_num_1.
  if [ "$key" = $'\x1b\x4f\x46' ]; then
   key=$'\x1b\x5b\x34\x7e'
  fi
